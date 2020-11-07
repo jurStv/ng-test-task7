@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { interval, Observable, Subject } from 'rxjs';
-import { bufferTime, tap } from 'rxjs/operators';
+import { bufferTime, startWith, tap } from 'rxjs/operators';
 
 /* TASK 3 */
 @Injectable({ providedIn: 'root' })
@@ -9,6 +9,7 @@ export class NumbersService {
 
   constructor() {
     interval(500).pipe(
+      startWith(true),
       tap({
         next: () => this.myNumber$.next(Math.random()),
       }),
