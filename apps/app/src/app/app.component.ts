@@ -51,7 +51,9 @@ export class AppComponent extends OnDestroy$ implements OnInit {
       tap({
         next: (messages) => this.searchResults = messages,
       }),
-
+      tap({
+        next: () => this.cd.detectChanges(),
+      }),
     );
     const networkStatuse$ = this.network.getOnlineStatus().pipe(
       tap({
@@ -91,9 +93,6 @@ export class AppComponent extends OnDestroy$ implements OnInit {
 
     merge(message$, networkStatuse$, number$, polling$, onlineAndLoggedIn$).pipe(
       takeUntilDestroyed(this),
-      tap({
-        next: () => this.cd.detectChanges(),
-      }),
     ).subscribe();
   }
 
