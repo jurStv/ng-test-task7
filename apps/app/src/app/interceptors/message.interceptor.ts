@@ -18,7 +18,7 @@ export class MessageInterceptor implements HttpInterceptor {
     const body = MESSAGES.filter(({ text }) => text.includes(query));
 
     return of(new HttpResponse({ status: 200, body})).pipe(
-      delay(randomIntFromInterval(1000, 3000))
+      delay(randomIntFromInterval(500, 1500))
     );
   }
 }
