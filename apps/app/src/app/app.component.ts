@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnI
 import { FormControl } from '@angular/forms';
 import { takeUntilDestroyed, OnDestroy$ } from '@pdtec/ngx-observable-lifecycle';
 import { combineLatest, merge, NEVER } from 'rxjs';
-import { debounceTime, map, share, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { IMessage } from './interfaces';
 
 import {
@@ -57,7 +57,6 @@ export class AppComponent extends OnDestroy$ implements OnInit {
       tap({
         next: (isOnline) => console.log(isOnline ? 'Online' : 'Offline'),
       }),
-      share(),
     );
     const number$ = this.numbers.getListOfNumbers().pipe(
       tap({
@@ -79,7 +78,7 @@ export class AppComponent extends OnDestroy$ implements OnInit {
       }),
     );
     /* TASK 2 */
-    const onlineAndLoggedIn$ = combineLatest([networkStatuse$ , this.auth.isUserLoggedIn$]).pipe(
+    const onlineAndLoggedIn$ = combineLatest([this.network.getOnlineStatus() , this.auth.isUserLoggedIn$]).pipe(
       tap({
         next: ([isOnline, isLoggedIn]) => {
           if (isOnline && isLoggedIn) {
